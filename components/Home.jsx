@@ -1,18 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Home from './components/Home';
+import Navbar from './Navbar';
 
-export default function App() {
+export default function Home() {
 	return (
 		<View style={styles.container}>
-			<Home />
+			<Navbar />
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		paddingVertical: 30,
-		backgroundColor: '#E6E6E6',
-	},
+	container: {},
 });
