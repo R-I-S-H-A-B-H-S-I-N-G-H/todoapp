@@ -12,8 +12,11 @@ export default function Navbar() {
 	const [displayitems, setdisplayitems] = useState([]);
 	const [keyword, setkeyword] = useState('');
 	function add() {
-		setitems([{ data: random(words), color: random(colors) }, ...items]);
-		setdisplayitems(items);
+		var ele = {};
+		ele.data = random(words);
+		ele.color = random(colors);
+		setitems([ele, ...items]);
+		if (ele.data.toLowerCase().includes(keyword.toLowerCase())) setdisplayitems([ele, ...displayitems]);
 	}
 	function del(key) {
 		setitems(items.filter((item, index) => index != key));
