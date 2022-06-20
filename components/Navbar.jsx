@@ -7,15 +7,32 @@ function random(a) {
 }
 export default function Navbar() {
 	const colors = ['#EF9683', '#F5DB70', '#B6F570', '#C70039'];
+	const words = ['Milk', 'Bread', 'Cream', 'Blueberry'];
 	const [items, setitems] = useState([]);
+	const [displayitems, setdisplayitems] = useState([]);
 	const [keyword, setkeyword] = useState('');
 	function add() {
-		if (keyword.length == 0) return;
-		setitems([{ data: keyword, color: random(colors) }, ...items]);
-		setkeyword('');
+		setitems([{ data: random(words), color: random(colors) }, ...items]);
+		setdisplayitems(items);
 	}
 	function del(key) {
 		setitems(items.filter((item, index) => index != key));
+		setdisplayitems(displayitems.filter((item, index) => index != key));
+	}
+	function search(keyword) {
+		// console.log(keyword);
+		if (keyword.length == 0) {
+			setdisplayitems(items);
+			return;
+		}
+		setdisplayitems(
+			items.filter((ele) => {
+				var item = ele.data;
+				if (item.toLowerCase().includes(keyword.toLowerCase())) {
+					return item;
+				}
+			})
+		);
 	}
 	return (
 		<View style={{ marginBottom: 50 }}>
@@ -24,8 +41,9 @@ export default function Navbar() {
 					value={keyword}
 					onChangeText={(v) => {
 						setkeyword(v);
+						search(v);
 					}}
-					placeholder='Enter'
+					placeholder='Search'
 					style={styles.input}
 				/>
 				<TouchableOpacity onPress={() => add()} style={styles.button}>
@@ -34,7 +52,7 @@ export default function Navbar() {
 			</View>
 			<FlatList
 				style={{ height: '90%' }}
-				data={items}
+				data={displayitems}
 				renderItem={({ item, index }) => (
 					<View
 						style={[
